@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import addEmail from '../redux/actions';
+import { addEmail } from '../redux/actions';
 
 class Login extends React.Component {
   state = {
@@ -11,7 +11,6 @@ class Login extends React.Component {
   };
 
   handleChange = ({ target: { id, value } }) => {
-    console.log();
     this.setState({
       [id]: value,
     }, this.validatorButton);

@@ -1,13 +1,25 @@
 const INITIAL_STATE = {
-  curriencies: [],
+  currencies: [],
+  currenciesDetails: {},
+  expenses: [],
 };
 
 const wallet = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-  case 'currencies':
+  case 'RECEIVE_CURRENCIES':
     return {
       ...state,
-      email: action.email,
+      currencies: action.currencies,
+    };
+  case 'SAVE_CURRENCIES_DETAILS':
+    return {
+      ...state,
+      currenciesDetails: action.details,
+    };
+  case 'ADD_EXPENSE':
+    return {
+      ...state,
+      expenses: expenses.push(action.expense),
     };
   default:
     return state;
