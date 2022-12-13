@@ -29,6 +29,11 @@ const wallet = (state = INITIAL_STATE, action) => {
       ...state,
       total: totalCalculator(state),
     };
+  case 'REMOVE_EXPENSE':
+    return {
+      ...state,
+      expenses: action.expenses,
+    };
   default:
     return state;
   }

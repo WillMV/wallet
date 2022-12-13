@@ -46,7 +46,9 @@ class WalletForm extends Component {
     const { state } = this;
     const dataExpense = {
       ...state,
-      id: expenses.length,
+      id: expenses.length < 1
+        ? 0
+        : expenses[expenses.length - 1].id + 1,
       exchangeRates: details,
     };
     this.dispatcher('addExpense', dataExpense);
@@ -152,10 +154,12 @@ class WalletForm extends Component {
 }
 
 WalletForm.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  details: PropTypes.shape().isRequired,
   currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
-  expenses: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  dispatch: PropTypes.func.isRequired,
+  details: PropTypes.shape({}).isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number,
+  })).isRequired,
 };
 
 const mapStateToProps = (state) => ({

@@ -1,8 +1,19 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { removeExpense, addTotal } from '../redux/actions';
 
 class Table extends Component {
+  removeExpense = ({ target: { name } }) => {
+    const { expenses, dispatch } = this.props;
+    const newExpenses = expenses.filter((expense) => (
+      expense.id !== parseInt(name, 10)
+    ));
+    console.log(newExpenses);
+    dispatch(removeExpense(newExpenses));
+    dispatch(addTotal());
+  };
+
   renderTable = () => {
     const { expenses } = this.props;
     if (expenses.length > 0) {
@@ -17,6 +28,7 @@ class Table extends Component {
           tag,
           exchangeRates,
         } = expense;
+        console.log(typeof (id));
         const coin = exchangeRates[currency].name;
         const { ask } = exchangeRates[currency];
         const convertedValue = (value * ask).toFixed(2);
@@ -30,7 +42,16 @@ class Table extends Component {
             <td>{ parseFloat(ask, DECIMAL).toFixed(2) }</td>
             <td>{ convertedValue }</td>
             <td>Real</td>
-            {/* <td><button></button></td> */}
+            <td>
+              <button
+                type="submit"
+                data-testid="delete-btn"
+                name={ id }
+                onClick={ this.removeExpense }
+              >
+                Excluir
+              </button>
+            </td>
           </tr>
         );
       }));
@@ -62,6 +83,7 @@ class Table extends Component {
 }
 
 Table.propTypes = {
+  dispatch: PropTypes.func.isRequired,
   expenses: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
 };
 
