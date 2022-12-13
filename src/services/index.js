@@ -1,13 +1,7 @@
-const totalCalculator = ({ expenses }) => {
-  const total = expenses.reduce((acc, expense) => {
-    // acc + expense.exchangeRates[expense.currency].ask
-    const { value, exchangeRates, currency } = expense;
-    const { ask } = exchangeRates[currency];
-    console.log(value, ask, acc);
-    return acc + (value * ask);
-  }, 0);
-  console.log(total);
-  return total;
-};
+const totalCalculator = ({ expenses }) => (expenses.reduce((acc, expense) => {
+  const { value, exchangeRates, currency } = expense;
+  const { ask } = exchangeRates[currency];
+  return acc + (value * ask);
+}, 0));
 
 export default totalCalculator;
