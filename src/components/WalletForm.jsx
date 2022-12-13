@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchCurriences, addExpense } from '../redux/actions';
+import { fetchCurriences, addExpense, addTotal } from '../redux/actions';
 
 class WalletForm extends Component {
   state = {
@@ -25,6 +25,9 @@ class WalletForm extends Component {
     case 'addExpense':
       dispatch(addExpense(data));
       break;
+    case 'addTotal':
+      dispatch(addTotal());
+      break;
     default:
       return null;
     }
@@ -44,9 +47,10 @@ class WalletForm extends Component {
     const dataExpense = {
       ...state,
       id: expenses.length,
-      exchangeRate: details,
+      exchangeRates: details,
     };
     this.dispatcher('addExpense', dataExpense);
+    this.dispatcher('addTotal');
     this.setState({
       value: '',
       description: '',
@@ -104,13 +108,13 @@ class WalletForm extends Component {
           value={ method }
           onChange={ this.handleChange }
         >
-          <option value="dinheiro">
+          <option value="Dinheiro">
             Dinheiro
           </option>
-          <option value="credito">
+          <option value="Cartão de crédito">
             Cartão de crédito
           </option>
-          <option value="debito">
+          <option value="Cartão de débito">
             Cartão de débito
           </option>
         </select>
@@ -120,19 +124,19 @@ class WalletForm extends Component {
           value={ tag }
           onChange={ this.handleChange }
         >
-          <option value="alimentacao">
+          <option value="Alimentação">
             Alimentação
           </option>
-          <option value="lazer">
+          <option value="Lazer">
             Lazer
           </option>
-          <option value="trabalho">
+          <option value="Trabalho">
             Trabalho
           </option>
-          <option value="transporte">
+          <option value="Transporte">
             Transporte
           </option>
-          <option value="saude">
+          <option value="Saúde">
             Saúde
           </option>
         </select>

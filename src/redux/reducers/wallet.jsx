@@ -1,7 +1,10 @@
+import totalCalculator from '../../services';
+
 const INITIAL_STATE = {
   currencies: [],
   currenciesDetails: {},
   expenses: [],
+  total: 0,
 };
 
 const wallet = (state = INITIAL_STATE, action) => {
@@ -20,6 +23,11 @@ const wallet = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       expenses: [...state.expenses, action.expense],
+    };
+  case 'EXPENSES_TOTAL':
+    return {
+      ...state,
+      total: totalCalculator(state),
     };
   default:
     return state;

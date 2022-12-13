@@ -8,6 +8,10 @@ export const addExpense = (expense) => ({
   expense,
 });
 
+export const addTotal = () => ({
+  type: 'EXPENSES_TOTAL',
+});
+
 const requestStarted = () => ({
   type: 'REQUEST_STARTED',
 });
