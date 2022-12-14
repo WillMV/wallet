@@ -25,7 +25,7 @@ const invalidAccounts = [
 ];
 const validAccounts = [
   {
-    login: 'email@email.com',
+    login: 'aemail@email.com',
     password: '123456',
   },
   {
@@ -33,7 +33,7 @@ const validAccounts = [
     password: 'abcdef',
   },
   {
-    login: 'email@email.com',
+    login: 'edmail@email.com',
     password: 'a1b2c3d4e5f6',
   },
   {
