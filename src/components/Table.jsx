@@ -20,7 +20,7 @@ class Table extends Component {
   renderTable = () => {
     const { expenses, editExpense } = this.props;
     if (expenses.length > 0) {
-      return (expenses.map((expense, index) => {
+      return (expenses.map((expense) => {
         const DECIMAL = 10;
         const {
           id,
@@ -35,7 +35,7 @@ class Table extends Component {
         const { ask } = exchangeRates[currency];
         const convertedValue = (value * ask).toFixed(2);
         return (
-          <tr key={ index }>
+          <tr key={ id }>
             <td>{ description }</td>
             <td>{ tag }</td>
             <td>{ method }</td>
@@ -48,7 +48,7 @@ class Table extends Component {
               <button
                 type="submit"
                 data-testid="edit-btn"
-                name={ index }
+                name={ id }
                 onClick={ editExpense }
               >
                 Editar

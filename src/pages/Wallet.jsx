@@ -17,7 +17,6 @@ class Wallet extends React.Component {
     },
     editing: false,
     btnName: 'Adicionar despesa',
-    indexToEdit: 0,
   };
 
   dispatcher = async (disp, data) => {
@@ -51,30 +50,28 @@ class Wallet extends React.Component {
 
   editExpense = ({ target: { name } }) => {
     const { editing } = this.state;
-    const { expenses } = this.props;
-    console.log(expenses);
-    const indexToEdit = parseInt(name, 10);
+    const { details: exchangeRates } = this.props;
+    const id = parseInt(name, 10);
     const editarDespesa = 'Editar Despesa';
     if (!editing) {
-      this.setState({
+      this.setState((prevState) => ({
         editing: true,
         btnName: editarDespesa,
-        indexToEdit,
-      });
+        expense: {
+          ...prevState.expense,
+          id,
+          exchangeRates,
+        },
+      }));
     }
   };
 
   saveEditExpense = () => {
-    const { indexToEdit, expense } = this.state;
-    const { expenses, dispatch } = this.props;
-    console.log(expenses);
-    const newExpenses = expenses;
-    newExpenses[indexToEdit] = expense;
-    console.log(expense);
-    console.log(expenses);
-    console.log(newExpenses);
+    const { expense } = this.state;
+    const { dispatch } = this.props;
     const adicionarDespesa = 'Adicionar despesa';
-    dispatch(editExpense(newExpenses));
+    dispatch(editExpense(expense));
+    this.dispatcher('addTotal');
     this.setState({
       editing: false,
       btnName: adicionarDespesa,

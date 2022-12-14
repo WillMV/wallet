@@ -17,9 +17,9 @@ export const removeExpense = (expenses) => ({
   expenses,
 });
 
-export const editExpense = (expenses) => ({
+export const editExpense = (currency) => ({
   type: 'EDIT_EXPENSE',
-  expenses,
+  currency,
 });
 
 const requestStarted = () => ({

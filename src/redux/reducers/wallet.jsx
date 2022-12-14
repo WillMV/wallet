@@ -30,10 +30,19 @@ const wallet = (state = INITIAL_STATE, action) => {
       total: totalCalculator(state),
     };
   case 'REMOVE_EXPENSE':
-  case 'EDIT_EXPENSE':
     return {
       ...state,
       expenses: action.expenses,
+    };
+  case 'EDIT_EXPENSE':
+    return {
+      ...state,
+      expenses: state.expenses.map((expense) => {
+        if (expense.id === action.currency.id) {
+          return action.currency;
+        }
+        return expense;
+      }),
     };
   default:
     return state;
