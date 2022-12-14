@@ -1,83 +1,44 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchCurriences, addExpense, addTotal } from '../redux/actions';
+import { fetchCurriences } from '../redux/actions';
 
 class WalletForm extends Component {
-  state = {
-    value: '',
-    description: '',
-    currency: 'USD',
-    method: 'dinheiro',
-    tag: 'alimentacao',
-  };
-
-  async componentDidMount() {
-    await this.dispatcher('fetchCurriences');
+  componentDidMount() {
+    const { dispatch } = this.props;
+    dispatch(fetchCurriences());
   }
 
-  dispatcher = async (disp, data) => {
-    const { dispatch } = this.props;
-    switch (disp) {
-    case 'fetchCurriences':
-      await dispatch(fetchCurriences());
-      break;
-    case 'addExpense':
-      dispatch(addExpense(data));
-      break;
-    case 'addTotal':
-      dispatch(addTotal());
-      break;
-    default:
-      return null;
-    }
-  };
-
-  handleChange = ({ target: { name, value } }) => {
-    this.setState({
-      [name]: value,
-    });
-  };
-
-  saveExpense = async (e) => {
+  prevSaveExpense = (e) => {
     e.preventDefault();
-    await this.dispatcher('fetchCurriences');
-    const { details, expenses } = this.props;
-    const { state } = this;
-    const dataExpense = {
-      ...state,
-      id: expenses.length < 1
-        ? 0
-        : expenses[expenses.length - 1].id + 1,
-      exchangeRates: details,
-    };
-    this.dispatcher('addExpense', dataExpense);
-    this.dispatcher('addTotal');
-    this.setState({
-      value: '',
-      description: '',
-    });
+    const { saveExpense } = this.props;
+    saveExpense();
   };
 
   render() {
     const {
-      value,
-      description,
-      currency,
-      method,
-      tag,
-    } = this.state;
-    const { currencies } = this.props;
+      expense: {
+        value,
+        description,
+        currency,
+        method,
+        tag,
+      },
+      handleChange,
+      currencies,
+      btnName,
+    } = this.props;
+
     return (
       <form>
-        {this.func}
         <input
           type="number"
           placeholder="Valor"
           data-testid="value-input"
+          min={ 1 }
           name="value"
           value={ value }
-          onChange={ this.handleChange }
+          onChange={ handleChange }
         />
         <input
           type="text"
@@ -85,13 +46,13 @@ class WalletForm extends Component {
           data-testid="description-input"
           name="description"
           value={ description }
-          onChange={ this.handleChange }
+          onChange={ handleChange }
         />
         <select
           data-testid="currency-input"
           name="currency"
           value={ currency }
-          onChange={ this.handleChange }
+          onChange={ handleChange }
         >
           {
             currencies.map((curr) => (
@@ -108,7 +69,7 @@ class WalletForm extends Component {
           data-testid="method-input"
           name="method"
           value={ method }
-          onChange={ this.handleChange }
+          onChange={ handleChange }
         >
           <option value="Dinheiro">
             Dinheiro
@@ -124,7 +85,7 @@ class WalletForm extends Component {
           data-testid="tag-input"
           name="tag"
           value={ tag }
-          onChange={ this.handleChange }
+          onChange={ handleChange }
         >
           <option value="Alimentação">
             Alimentação
@@ -144,9 +105,9 @@ class WalletForm extends Component {
         </select>
         <button
           type="submit"
-          onClick={ this.saveExpense }
+          onClick={ this.prevSaveExpense }
         >
-          Adicionar despesa
+          {btnName}
         </button>
       </form>
     );
@@ -154,12 +115,18 @@ class WalletForm extends Component {
 }
 
 WalletForm.propTypes = {
+  btnName: PropTypes.string.isRequired,
   currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
   dispatch: PropTypes.func.isRequired,
-  details: PropTypes.shape({}).isRequired,
-  expenses: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number,
-  })).isRequired,
+  handleChange: PropTypes.func.isRequired,
+  saveExpense: PropTypes.func.isRequired,
+  expense: PropTypes.shape({
+    value: PropTypes.string,
+    description: PropTypes.string,
+    currency: PropTypes.string,
+    method: PropTypes.string,
+    tag: PropTypes.string,
+  }).isRequired,
 };
 
 const mapStateToProps = (state) => ({

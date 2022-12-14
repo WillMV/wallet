@@ -4,20 +4,23 @@ import { connect } from 'react-redux';
 import { removeExpense, addTotal } from '../redux/actions';
 
 class Table extends Component {
+  componentDidUpdate() {
+    console.log('update');
+  }
+
   removeExpense = ({ target: { name } }) => {
     const { expenses, dispatch } = this.props;
     const newExpenses = expenses.filter((expense) => (
       expense.id !== parseInt(name, 10)
     ));
-    console.log(newExpenses);
     dispatch(removeExpense(newExpenses));
     dispatch(addTotal());
   };
 
   renderTable = () => {
-    const { expenses } = this.props;
+    const { expenses, editExpense } = this.props;
     if (expenses.length > 0) {
-      return (expenses.map((expense) => {
+      return (expenses.map((expense, index) => {
         const DECIMAL = 10;
         const {
           id,
@@ -28,12 +31,11 @@ class Table extends Component {
           tag,
           exchangeRates,
         } = expense;
-        console.log(typeof (id));
         const coin = exchangeRates[currency].name;
         const { ask } = exchangeRates[currency];
         const convertedValue = (value * ask).toFixed(2);
         return (
-          <tr key={ id }>
+          <tr key={ index }>
             <td>{ description }</td>
             <td>{ tag }</td>
             <td>{ method }</td>
@@ -43,6 +45,14 @@ class Table extends Component {
             <td>{ convertedValue }</td>
             <td>Real</td>
             <td>
+              <button
+                type="submit"
+                data-testid="edit-btn"
+                name={ index }
+                onClick={ editExpense }
+              >
+                Editar
+              </button>
               <button
                 type="submit"
                 data-testid="delete-btn"
@@ -84,6 +94,7 @@ class Table extends Component {
 
 Table.propTypes = {
   dispatch: PropTypes.func.isRequired,
+  editExpense: PropTypes.func.isRequired,
   expenses: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
 };
 

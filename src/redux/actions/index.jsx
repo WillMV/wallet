@@ -17,6 +17,11 @@ export const removeExpense = (expenses) => ({
   expenses,
 });
 
+export const editExpense = (expenses) => ({
+  type: 'EDIT_EXPENSE',
+  expenses,
+});
+
 const requestStarted = () => ({
   type: 'REQUEST_STARTED',
 });
