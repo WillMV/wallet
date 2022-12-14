@@ -1,16 +1,18 @@
-import { legacy_createStore as createStore } from 'redux';
+import { legacy_createStore as createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import { render } from '@testing-library/react';
+import thunk from 'redux-thunk';
 import rootReducer from '../../redux/reducers';
+import App from '../../App';
 
 const renderWithRouterAndRedux = (
-  component,
+  component = <App />,
   {
     initialState = {},
     initialEntries = ['/'],
-    store = createStore(rootReducer, initialState),
+    store = createStore(rootReducer, initialState, applyMiddleware(thunk)),
     history = createMemoryHistory({ initialEntries }),
   } = {},
 ) => (
@@ -27,5 +29,6 @@ const renderWithRouterAndRedux = (
       </Router>,
     ),
     store,
+    history,
   });
 export default renderWithRouterAndRedux;
