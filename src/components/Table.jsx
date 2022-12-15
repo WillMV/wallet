@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { removeExpense, addTotal } from '../redux/actions';
 
-class Table extends Component {dele
+class Table extends Component {
   removeExpense = ({ target: { name } }) => {
     const { expenses, dispatch } = this.props;
     const newExpenses = expenses.filter((expense) => (
