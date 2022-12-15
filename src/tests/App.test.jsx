@@ -120,7 +120,7 @@ describe('testa a pagina carteira', () => {
     expect(emailHeader).toBeInTheDocument();
   });
   test('Se é possível inserir despesas', async () => {
-    renderWithRouterAndRedux(<App />, { initialState, initialEntries });
+    // const { store } = renderWithRouterAndRedux(<App />, { initialState, initialEntries });
     const inputValue = screen.getByTestId('value-input');
     const descriptionInput = screen.getByTestId('description-input');
     const currencyInput = screen.getByTestId('currency-input');
@@ -167,6 +167,8 @@ describe('testa a pagina carteira', () => {
     expect(btnEnviar.innerHTML).toBe('Editar Despesa');
 
     userEvent.click(btnEnviar);
+
+    // expect(store.getState().wallet.expenses).toHaveLength(1);
 
     expect(editBtn).toBeInTheDocument();
 
