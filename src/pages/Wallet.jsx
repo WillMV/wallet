@@ -22,20 +22,14 @@ class Wallet extends React.Component {
   dispatcher = async (disp, data) => {
     const { dispatch } = this.props;
     switch (disp) {
-    case 'fetchCurriences':
-      await dispatch(fetchCurriences());
-      break;
     case 'addExpense':
       dispatch(addExpense(data));
       break;
     case 'addTotal':
       dispatch(addTotal());
       break;
-    case 'editExpense':
-      dispatch(editExpense(data));
-      break;
     default:
-      return null;
+      await dispatch(fetchCurriences());
     }
   };
 
@@ -84,7 +78,7 @@ class Wallet extends React.Component {
   };
 
   saveNewExpense = async () => {
-    await this.dispatcher('fetchCurriences');
+    await this.dispatcher();
     const { details, expenses } = this.props;
     const { expense } = this.state;
     const dataExpense = {
