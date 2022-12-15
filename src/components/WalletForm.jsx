@@ -104,6 +104,7 @@ class WalletForm extends Component {
           </option>
         </select>
         <button
+          data-testid="button-send"
           type="submit"
           onClick={ this.prevSaveExpense }
         >

@@ -21,12 +21,6 @@ class Login extends React.Component {
     const reg = /\S+@\S+\.\S+/;
     return reg.test(email);
   };
-  // disableAltered = (e) => {
-  //   console.log(e.type);
-  //   this.setState({
-  //     disabled: true,
-  //   });
-  // };
 
   validatePassword = () => {
     const MIN_LENGTH = 6;
