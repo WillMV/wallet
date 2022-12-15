@@ -15,3 +15,5 @@ export default class App extends Component {
     );
   }
 }
+
+// A melhorar: funções do código e organização do teste
