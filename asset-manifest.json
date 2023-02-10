@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/wallet/static/js/main.d020a3a2.js",
+    "main.js": "/wallet/static/js/main.abf63ca9.js",
     "index.html": "/wallet/index.html",
-    "main.d020a3a2.js.map": "/wallet/static/js/main.d020a3a2.js.map"
+    "main.abf63ca9.js.map": "/wallet/static/js/main.abf63ca9.js.map"
   },
   "entrypoints": [
-    "static/js/main.d020a3a2.js"
+    "static/js/main.abf63ca9.js"
   ]
 }
